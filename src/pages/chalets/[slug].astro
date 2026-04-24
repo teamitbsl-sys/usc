@@ -1,0 +1,198 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EnquiryForm from '../../components/EnquiryForm.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import { chalets, getChaletBySlug, getChaletsByResort } from '../../data/chalets';
+
+export function getStaticPaths() {
+  return chalets.map(chalet => ({ params: { slug: chalet.slug } }));
+}
+
+const { slug } = Astro.params;
+const chalet = getChaletBySlug(slug!);
+
+if (!chalet) return Astro.redirect('/summer-chalets');
+
+const similar = getChaletsByResort(chalet.resortSlug).filter(c => c.slug !== chalet.slug).slice(0, 3);
+const otherChalets = similar.length < 3
+  ? [...similar, ...chalets.filter(c => c.slug !== chalet.slug && c.resortSlug !== chalet.resortSlug)].slice(0, 3)
+  : similar;
+
+const amenityIconMap: Record<string, string> = {
+  'Pool': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>`,
+  'Sauna': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>`,
+  'Gym': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>`,
+  'Cinema': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>`,
+  'Fireplace': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>`,
+  'Wi-Fi': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg>`,
+  'Lift': `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>`,
+};
+
+function getAmenityIcon(amenity: string): string {
+  const key = Object.keys(amenityIconMap).find(k => amenity.toLowerCase().includes(k.toLowerCase()));
+  return key ? amenityIconMap[key] : `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/></svg>`;
+}
+---
+
+<Layout
+  title={chalet.name}
+  description={chalet.shortDescription}
+  image={chalet.heroImage}
+>
+
+  <!-- Breadcrumb -->
+  <div class="bg-cream border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 text-xs text-gray-500 font-sans flex flex-wrap gap-1 items-center">
+      <a href="/" class="hover:text-gold transition-colors">Home</a>
+      <span>/</span>
+      <a href="/summer-chalets" class="hover:text-gold transition-colors">Summer Chalets</a>
+      <span>/</span>
+      <a href={`/resorts/${chalet.countrySlug}`} class="hover:text-gold transition-colors">{chalet.country}</a>
+      <span>/</span>
+      <a href={`/resorts/${chalet.countrySlug}/${chalet.resortSlug}`} class="hover:text-gold transition-colors">{chalet.resort}</a>
+      <span>/</span>
+      <span class="text-navy">{chalet.name}</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="relative h-[60vh] min-h-[400px] bg-navy-dark overflow-hidden">
+    <img
+      src={chalet.heroImage}
+      alt={chalet.name}
+      class="w-full h-full object-cover opacity-70"
+      onerror="this.style.display='none'"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-transparent to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-8 max-w-7xl mx-auto">
+      <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-2">{chalet.resort}, {chalet.country}</p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-white font-semibold">{chalet.name}</h1>
+    </div>
+  </section>
+
+  <!-- Image Gallery Strip -->
+  {chalet.images.length > 1 && (
+    <div class="grid grid-cols-3 gap-1 max-h-48 overflow-hidden">
+      {chalet.images.slice(1, 4).map((img, i) => (
+        <div class="bg-navy-dark aspect-video overflow-hidden">
+          <img src={img} alt={`${chalet.name} - image ${i + 2}`} class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.style.display='none'" />
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+      <!-- Left: Details -->
+      <div class="lg:col-span-2 space-y-10">
+
+        <!-- Quick Specs -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {[
+            { label: 'Sleeps', value: chalet.sleepsMin === chalet.sleepsMax ? `${chalet.sleepsMin}` : `${chalet.sleepsMin}-${chalet.sleepsMax}` },
+            { label: 'Bedrooms', value: chalet.bedrooms.toString() },
+            { label: 'Bathrooms', value: chalet.bathrooms.toString() },
+            { label: 'Board Basis', value: chalet.boardBasis.join(' / ') },
+          ].map(spec => (
+            <div class="bg-cream p-4 text-center">
+              <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-1">{spec.label}</p>
+              <p class="font-serif text-navy text-lg">{spec.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Description -->
+        <div>
+          <h2 class="font-serif text-2xl text-navy mb-5">About {chalet.name}</h2>
+          <div class="space-y-4">
+            {chalet.description.map(para => (
+              <p class="text-gray-600 leading-relaxed">{para}</p>
+            ))}
+          </div>
+        </div>
+
+        <!-- Highlights -->
+        <div>
+          <h2 class="font-serif text-2xl text-navy mb-5">Highlights</h2>
+          <ul class="space-y-3">
+            {chalet.highlights.map(highlight => (
+              <li class="flex items-start gap-3 text-gray-600">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {highlight}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Amenities -->
+        <div>
+          <h2 class="font-serif text-2xl text-navy mb-5">Facilities &amp; Amenities</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {chalet.amenities.map(amenity => (
+              <div class="flex items-center gap-2.5 bg-cream px-3 py-2.5">
+                <span class="text-gold" set:html={getAmenityIcon(amenity)} />
+                <span class="text-sm text-gray-700">{amenity}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="bg-navy-dark p-8">
+          <h2 class="font-serif text-2xl text-white mb-4">Pricing</h2>
+          {chalet.pricePOA ? (
+            <div>
+              <p class="text-gray-300 leading-relaxed mb-4">Pricing for {chalet.name} is available on application. Our team will be delighted to provide full details and availability for your preferred dates.</p>
+              <a href="#enquiry" class="inline-block bg-gold hover:bg-gold-light text-white font-sans font-medium px-8 py-3 transition-colors duration-200">Request Pricing</a>
+            </div>
+          ) : (
+            <div>
+              <p class="text-gold font-serif text-3xl mb-2">
+                {new Intl.NumberFormat('en-GB', { style: 'currency', currency: chalet.currency, maximumFractionDigits: 0 }).format(chalet.priceFrom!)}
+                <span class="text-gray-400 text-lg font-sans font-light"> per week</span>
+              </p>
+              <p class="text-gray-400 text-sm">Prices shown are for 7-night stays. Please enquire for exact dates and availability.</p>
+            </div>
+          )}
+        </div>
+
+        <!-- View on AIL -->
+        <div class="border border-gray-200 p-5 flex items-center justify-between gap-4">
+          <div>
+            <p class="font-sans font-medium text-navy mb-1">View full details on Alps In Luxury</p>
+            <p class="text-sm text-gray-500">More photos, availability, and detailed information available on our sister site.</p>
+          </div>
+          <a href={chalet.ailUrl} target="_blank" rel="noopener noreferrer" class="flex-shrink-0 border border-navy text-navy hover:bg-navy hover:text-white font-sans text-sm font-medium px-5 py-2.5 transition-all duration-200">
+            View on AIL &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Enquiry Form -->
+      <div class="lg:col-span-1" id="enquiry">
+        <div class="sticky top-24">
+          <EnquiryForm chaletName={chalet.name} />
+          <div class="mt-4 text-center">
+            <p class="text-xs text-gray-500 mb-1">Or call us directly</p>
+            <a href="tel:+441202203659" class="text-navy font-semibold hover:text-gold transition-colors">+44 (0)1202 203659</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar Chalets -->
+    {otherChalets.length > 0 && (
+      <div class="mt-20 pt-16 border-t border-gray-100">
+        <h2 class="font-serif text-3xl text-navy mb-8 text-center">You May Also Like</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {otherChalets.map(c => <PropertyCard chalet={c} />)}
+        </div>
+      </div>
+    )}
+  </div>
+
+</Layout>

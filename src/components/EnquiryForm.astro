@@ -1,0 +1,77 @@
+---
+interface Props {
+  chaletName?: string;
+}
+const { chaletName } = Astro.props;
+---
+
+<div class="bg-cream p-8">
+  <h3 class="font-serif text-2xl text-navy mb-2">Make an Enquiry</h3>
+  <p class="text-gray-500 text-sm mb-6">Our Alpine specialists will respond within one working day.</p>
+
+  <form class="space-y-4" name="enquiry" method="POST" action="/enquiry-submitted">
+    {chaletName && <input type="hidden" name="chalet" value={chaletName} />}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="first-name">First Name *</label>
+        <input type="text" id="first-name" name="firstName" required class="form-input" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="last-name">Last Name *</label>
+        <input type="text" id="last-name" name="lastName" required class="form-input" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required class="form-input" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="phone">Telephone</label>
+        <input type="tel" id="phone" name="phone" class="form-input" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="arrival">Preferred Arrival</label>
+        <input type="date" id="arrival" name="arrival" class="form-input" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="guests">Number of Guests</label>
+        <input type="number" id="guests" name="guests" min="1" max="50" class="form-input" />
+      </div>
+    </div>
+
+    {!chaletName && (
+      <div>
+        <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="chalet-interest">Chalet or Resort of Interest</label>
+        <input type="text" id="chalet-interest" name="chaletInterest" class="form-input" placeholder="e.g. Lech, Zermatt, or a specific chalet" />
+      </div>
+    )}
+
+    <div>
+      <label class="block text-xs font-semibold text-navy tracking-wider uppercase mb-1.5" for="message">Your Message</label>
+      <textarea id="message" name="message" rows="4" class="form-input resize-none" placeholder="Tell us about your ideal summer Alpine holiday..."></textarea>
+    </div>
+
+    <div class="flex items-start gap-3">
+      <input type="checkbox" id="privacy" name="privacy" required class="mt-1 accent-gold" />
+      <label for="privacy" class="text-xs text-gray-500 leading-relaxed">
+        I agree to the <a href="/privacy-policy" class="text-gold hover:underline">Privacy Policy</a> and consent to Ultimate Summer Chalets contacting me regarding my enquiry.
+      </label>
+    </div>
+
+    <button type="submit" class="w-full bg-navy hover:bg-navy-light text-white font-sans font-medium py-3 px-6 transition-colors duration-200 tracking-wide">
+      Send Enquiry
+    </button>
+  </form>
+</div>
+
+<style>
+  .form-input {
+    @apply w-full border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-gold transition-colors duration-150;
+  }
+</style>

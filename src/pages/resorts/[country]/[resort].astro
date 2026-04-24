@@ -1,0 +1,79 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PropertyCard from '../../../components/PropertyCard.astro';
+import { resorts, getResortBySlug } from '../../../data/resorts';
+import { getChaletsByResort } from '../../../data/chalets';
+
+export function getStaticPaths() {
+  return resorts.map(r => ({ params: { country: r.countrySlug, resort: r.slug } }));
+}
+
+const { country: countrySlug, resort: resortSlug } = Astro.params;
+const resort = getResortBySlug(resortSlug!);
+if (!resort) return Astro.redirect('/');
+
+const resortChalets = getChaletsByResort(resortSlug!);
+---
+
+<Layout title={`Luxury Summer Chalets in ${resort.name}`} description={resort.description[0]}>
+
+  <div class="bg-cream border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 text-xs text-gray-500 font-sans flex flex-wrap gap-1 items-center">
+      <a href="/" class="hover:text-gold transition-colors">Home</a>
+      <span>/</span>
+      <a href={`/resorts/${countrySlug}`} class="hover:text-gold transition-colors">{resort.country}</a>
+      <span>/</span>
+      <span class="text-navy">{resort.name}</span>
+    </div>
+  </div>
+
+  <div class="relative h-72 bg-navy-dark overflow-hidden">
+    <img src={resort.heroImage} alt={resort.name} class="w-full h-full object-cover opacity-50" onerror="this.style.display='none'" />
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/60 to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+      <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">{resort.country}</p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-white">Luxury Summer Chalets in {resort.name}</h1>
+      <p class="text-gray-300 text-sm mt-2">Altitude: {resort.altitude}</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+      <div class="lg:col-span-2 space-y-4">
+        {resort.description.map(para => <p class="text-gray-600 leading-relaxed">{para}</p>)}
+      </div>
+      <div class="bg-cream p-6 h-fit">
+        <h3 class="font-serif text-lg text-navy mb-4">Summer Activities</h3>
+        <div class="flex flex-wrap gap-2">
+          {resort.activities.map(activity => (
+            <span class="text-xs bg-white border border-gray-200 text-gray-600 px-3 py-1">{activity}</span>
+          ))}
+        </div>
+        <div class="mt-5 pt-5 border-t border-gray-200">
+          <h3 class="font-serif text-lg text-navy mb-3">Highlights</h3>
+          <ul class="space-y-2">
+            {resort.highlights.map(h => (
+              <li class="flex items-start gap-2 text-sm text-gray-600">
+                <svg class="w-4 h-4 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                {h}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="font-serif text-3xl text-navy mb-8">Chalets in {resort.name}</h2>
+    {resortChalets.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {resortChalets.map(chalet => <PropertyCard chalet={chalet} />)}
+      </div>
+    ) : (
+      <div class="bg-cream p-10 text-center">
+        <p class="text-gray-500 font-serif text-xl mb-3">No chalets currently listed for {resort.name}.</p>
+        <p class="text-gray-400 text-sm mb-5">Please contact us -- we may be able to assist with bespoke options.</p>
+        <a href="/contact" class="inline-block bg-navy text-white font-sans text-sm font-medium px-6 py-2.5 hover:bg-navy-light transition-colors">Get in Touch</a>
+      </div>
+    )}
+  </div>
+</Layout>

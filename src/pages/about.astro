@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About Us" description="Ultimate Summer Chalets is part of Blue Skies Lifestyle Ltd, bringing together the finest properties from Ultimate Luxury Chalets and Alps In Luxury.">
+
+  <div class="bg-navy-dark py-16 px-4 sm:px-6 text-center">
+    <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">About Us</p>
+    <h1 class="font-serif text-4xl sm:text-5xl text-white mb-4">Who We Are</h1>
+    <p class="text-gray-300 max-w-xl mx-auto">An independent British company with twenty years of experience placing guests in the finest Alpine properties.</p>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-16">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="font-serif text-3xl text-navy mb-5">The Very Best, from Two Great Names</h2>
+        <div class="space-y-4 text-gray-600 leading-relaxed">
+          <p>Ultimate Summer Chalets was created to answer a simple question: which chalets in the Alps are truly exceptional in summer?</p>
+          <p>To answer it, we looked at two portfolios we know better than anyone. <a href="https://www.alpsinluxury.com" class="text-gold hover:underline">Alps In Luxury</a> has spent years curating the finest summer chalets across Austria, Switzerland, and Italy. <a href="https://www.ultimateluxurychalets.com" class="text-gold hover:underline">Ultimate Luxury Chalets</a> represents the pinnacle of the Alpine property market -- a collection of just 100 or so properties recognised as the very finest in Europe.</p>
+          <p>Every chalet in our collection appears in both portfolios. That double recognition is our quality guarantee.</p>
+        </div>
+      </div>
+      <div class="bg-cream p-8">
+        <div class="space-y-5">
+          {[
+            { num: '20+', label: 'Years in Alpine luxury' },
+            { num: '11', label: 'Handpicked summer chalets' },
+            { num: '7', label: 'Premier Alpine resorts' },
+            { num: '3', label: 'Countries' },
+          ].map(stat => (
+            <div class="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
+              <p class="font-serif text-4xl text-gold mb-1">{stat.num}</p>
+              <p class="text-sm text-gray-500">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="font-serif text-3xl text-navy mb-5">Blue Skies Lifestyle</h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>We are part of Blue Skies Lifestyle Ltd, an independent family business founded by Andy and Fran Castle. The business began with <a href="https://www.skiinluxury.com" class="text-gold hover:underline">Ski In Luxury</a> in 2005, followed by <a href="https://www.villasinluxury.com" class="text-gold hover:underline">Villas In Luxury</a> in 2007, Ultimate Luxury Chalets in 2012, and Alps In Luxury shortly after -- each built on the same principle of quality over quantity, and personal knowledge over algorithms.</p>
+        <p>Every property in our portfolios has been personally visited by a member of our team. We do not list chalets we have not seen. Our specialists know the resorts, the properties, and the people who run them -- and that knowledge is what we bring to every enquiry.</p>
+        <p>We are based in Bournemouth on the south coast of England, and our team is available six days a week to assist with any question, however large or small.</p>
+      </div>
+    </div>
+
+    <div class="bg-navy-dark p-10 text-center">
+      <h2 class="font-serif text-3xl text-white mb-4">Ready to Start Planning?</h2>
+      <p class="text-gray-300 mb-8 max-w-lg mx-auto">Our specialists would love to hear from you. Tell us about your ideal Alpine summer and we will find the perfect chalet.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact" class="bg-gold hover:bg-gold-light text-white font-sans font-medium px-8 py-3 transition-colors duration-200">Make an Enquiry</a>
+        <a href="tel:+441202203659" class="border border-white text-white hover:bg-white hover:text-navy font-sans font-medium px-8 py-3 transition-all duration-200">+44 (0)1202 203659</a>
+      </div>
+    </div>
+
+  </div>
+</Layout>

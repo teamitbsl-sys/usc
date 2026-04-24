@@ -1,0 +1,49 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PropertyCard from '../../../components/PropertyCard.astro';
+import { countries, getCountryBySlug, getResortsByCountry } from '../../../data/resorts';
+import { getChaletsByCountry } from '../../../data/chalets';
+
+export function getStaticPaths() {
+  return countries.map(c => ({ params: { country: c.slug } }));
+}
+
+const { country: countrySlug } = Astro.params;
+const country = getCountryBySlug(countrySlug!);
+if (!country) return Astro.redirect('/');
+
+const countryResorts = getResortsByCountry(countrySlug!);
+const countryChalets = getChaletsByCountry(countrySlug!);
+---
+
+<Layout title={`Luxury Summer Chalets in ${country.name}`} description={country.description}>
+
+  <div class="relative h-72 bg-navy-dark overflow-hidden">
+    <img src={country.heroImage} alt={country.name} class="w-full h-full object-cover opacity-50" onerror="this.style.display='none'" />
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/60 to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+      <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Summer Chalets</p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-white">Luxury Summer Chalets in {country.name}</h1>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <p class="text-gray-600 leading-relaxed max-w-3xl mb-12">{country.description}</p>
+
+    <h2 class="font-serif text-2xl text-navy mb-6">Resorts in {country.name}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      {countryResorts.map(resort => (
+        <a href={`/resorts/${countrySlug}/${resort.slug}`} class="group bg-cream p-6 hover:bg-navy-dark transition-colors duration-200">
+          <h3 class="font-serif text-xl text-navy group-hover:text-gold transition-colors mb-2">{resort.name}</h3>
+          <p class="text-xs text-gray-500 group-hover:text-gray-300 mb-3 transition-colors">{resort.altitude}</p>
+          <p class="text-sm text-gray-600 group-hover:text-gray-300 transition-colors leading-relaxed line-clamp-3">{resort.description[0]}</p>
+        </a>
+      ))}
+    </div>
+
+    <h2 class="font-serif text-2xl text-navy mb-6">All Chalets in {country.name}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {countryChalets.map(chalet => <PropertyCard chalet={chalet} />)}
+    </div>
+  </div>
+</Layout>

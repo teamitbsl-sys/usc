@@ -1,0 +1,103 @@
+---
+import type { Chalet } from '../data/chalets';
+
+interface Props {
+  chalet: Chalet;
+}
+
+const { chalet } = Astro.props;
+
+const amenityIcons: Record<string, string> = {
+  'Indoor Pool': '🏊',
+  'Outdoor Pool': '🏊',
+  'Private Pool': '🏊',
+  'Shared Pool': '🏊',
+  '2 Indoor Pools': '🏊',
+  'Hot Tub': '♨️',
+  'Outdoor Jacuzzi': '♨️',
+  'Indoor Jacuzzi': '♨️',
+  'Jacuzzi Pool': '♨️',
+  'Sauna': '🧖',
+  'Steam Room': '🧖',
+  'Hammam': '🧖',
+  'Gym': '🏋️',
+  'Cinema': '🎬',
+  'Fireplace': '🔥',
+  'Spa': '💆',
+  'Wi-Fi': '📶',
+};
+
+const displayAmenities = chalet.amenities.slice(0, 6);
+
+function formatPrice(chalet: Chalet): string {
+  if (chalet.pricePOA) return 'Price on Application';
+  if (!chalet.priceFrom) return 'Price on Application';
+  const formatted = new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: chalet.currency,
+    maximumFractionDigits: 0,
+  }).format(chalet.priceFrom);
+  return `From ${formatted} per week`;
+}
+---
+
+<article class="group bg-white shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
+  <!-- Image -->
+  <a href={`/chalets/${chalet.slug}`} class="block overflow-hidden aspect-[4/3] bg-gray-100 relative">
+    <img
+      src={chalet.heroImage}
+      alt={chalet.name}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      loading="lazy"
+      onerror="this.src='/images/placeholder-chalet.jpg'"
+    />
+    <div class="absolute top-3 left-3">
+      <span class="bg-navy-dark text-white text-xs font-sans px-2.5 py-1 tracking-wide">
+        {chalet.country}
+      </span>
+    </div>
+  </a>
+
+  <!-- Content -->
+  <div class="p-5 flex flex-col flex-1">
+    <div class="mb-3">
+      <p class="text-gold text-xs font-sans font-semibold tracking-widest uppercase mb-1">{chalet.resort}</p>
+      <h3 class="font-serif text-xl font-medium text-navy leading-tight">
+        <a href={`/chalets/${chalet.slug}`} class="hover:text-gold transition-colors duration-150">{chalet.name}</a>
+      </h3>
+    </div>
+
+    <!-- Specs -->
+    <div class="flex items-center gap-4 text-xs text-gray-500 mb-4 pb-4 border-b border-gray-100">
+      <span class="flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Sleeps {chalet.sleepsMin}{chalet.sleepsMax !== chalet.sleepsMin ? `-${chalet.sleepsMax}` : ''}
+      </span>
+      <span class="flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        {chalet.bedrooms} bedrooms
+      </span>
+      <span class="text-gray-400">{chalet.boardBasis.join(' / ')}</span>
+    </div>
+
+    <!-- Amenity tags -->
+    <div class="flex flex-wrap gap-1.5 mb-4">
+      {displayAmenities.map(amenity => (
+        <span class="bg-cream text-navy-dark text-xs px-2 py-0.5 font-sans">{amenity}</span>
+      ))}
+    </div>
+
+    <!-- Price + CTA -->
+    <div class="mt-auto flex items-end justify-between gap-3">
+      <div>
+        <p class="text-xs text-gray-400 mb-0.5">From</p>
+        <p class="text-navy font-serif text-lg font-medium leading-tight">
+          {chalet.pricePOA ? 'Price on Application' : formatPrice(chalet)}
+        </p>
+      </div>
+      <a href={`/chalets/${chalet.slug}`} class="flex-shrink-0 bg-navy hover:bg-navy-light text-white text-xs font-sans font-medium px-4 py-2 transition-colors duration-200">
+        View Details
+      </a>
+    </div>
+  </div>
+</article>

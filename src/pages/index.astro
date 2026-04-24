@@ -1,40 +1,180 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import { chalets } from '../data/chalets';
+import { resorts, countries } from '../data/resorts';
+
+const featuredChalets = chalets.slice(0, 6);
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Summer Chalets</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: Georgia, serif;
-        background: #f5f0eb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-      }
-      .container {
-        text-align: center;
-        padding: 2rem;
-      }
-      h1 {
-        font-size: 3rem;
-        color: #2c3e50;
-        margin-bottom: 0.5rem;
-      }
-      p {
-        font-size: 1.25rem;
-        color: #7f8c8d;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Ultimate Summer Chalets</h1>
-      <p>Coming soon — something beautiful is on its way.</p>
+
+<Layout title="Luxury Summer Chalets in the Alps" description="The finest luxury summer chalets in Austria, Switzerland, and Italy. Handpicked from the portfolios of Ultimate Luxury Chalets and Alps In Luxury.">
+
+  <!-- Hero -->
+  <section class="relative h-[85vh] min-h-[560px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-navy-dark">
+      <img
+        src="https://www.alpsinluxury.com/media/hero/alps-summer-hero.jpg"
+        alt="Luxury Alpine summer landscape"
+        class="w-full h-full object-cover opacity-50"
+        onerror="this.style.display='none'"
+      />
     </div>
-  </body>
-</html>
+    <div class="absolute inset-0 bg-gradient-to-b from-navy-dark/30 via-transparent to-navy-dark/60"></div>
+    <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <p class="text-gold text-xs sm:text-sm font-sans font-semibold tracking-widest uppercase mb-4">Blue Skies Lifestyle</p>
+      <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-6">
+        The Finest Luxury<br/>Summer Chalets in the Alps
+      </h1>
+      <p class="text-gray-200 text-lg sm:text-xl font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+        A curated collection of the very best Alpine summer retreats, selected from the world's most celebrated mountain resorts.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/summer-chalets" class="bg-gold hover:bg-gold-light text-white font-sans font-medium px-8 py-3.5 transition-colors duration-200 tracking-wide">
+          View All Chalets
+        </a>
+        <a href="/contact" class="bg-transparent border border-white text-white hover:bg-white hover:text-navy font-sans font-medium px-8 py-3.5 transition-all duration-200 tracking-wide">
+          Speak to a Specialist
+        </a>
+      </div>
+    </div>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-white opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- Intro strip -->
+  <section class="bg-gold py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-white text-sm font-sans">
+        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Personally Inspected Properties</span>
+        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Expert Alpine Specialists</span>
+        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Tailored to You</span>
+        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Part of Blue Skies Lifestyle</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Chalets -->
+  <section class="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Our Collection</p>
+      <h2 class="font-serif text-3xl sm:text-4xl text-navy mb-4">Featured Summer Chalets</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        Each property in our collection has been selected for its exceptional quality, outstanding facilities, and remarkable Alpine setting.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {featuredChalets.map(chalet => <PropertyCard chalet={chalet} />)}
+    </div>
+    <div class="text-center">
+      <a href="/summer-chalets" class="inline-block border-2 border-navy text-navy hover:bg-navy hover:text-white font-sans font-medium px-10 py-3 transition-all duration-200 tracking-wide">
+        View All {chalets.length} Chalets
+      </a>
+    </div>
+  </section>
+
+  <!-- Why Alpine Summer -->
+  <section class="bg-navy-dark py-20 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Why Summer in the Alps</p>
+          <h2 class="font-serif text-3xl sm:text-4xl text-white mb-6 leading-tight">
+            The Alps at Their<br/>Most Magnificent
+          </h2>
+          <div class="space-y-4 text-gray-300 leading-relaxed">
+            <p>When the snow retreats, the Alps reveal a different kind of beauty. Wildflower meadows, crystalline lakes, and open mountain trails stretch as far as the eye can see -- all without the winter crowds.</p>
+            <p>The summer months bring long, warm days, clear mountain air, and an extraordinary range of activities: from gentle valley walks and lakeside swimming to high-altitude hiking, mountain biking, via ferrata, and paragliding.</p>
+            <p>And throughout it all, the luxury remains constant. Our chalets offer the same world-class service, exceptional facilities, and immaculate presentation that you would expect in the finest ski season -- simply with a very different view from the terrace.</p>
+          </div>
+          <a href="/summer-chalets" class="inline-block mt-8 bg-gold hover:bg-gold-light text-white font-sans font-medium px-8 py-3 transition-colors duration-200">
+            Explore Our Collection
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {[
+            { icon: '🥾', title: 'Hiking', desc: 'Thousands of kilometres of signed trails from valley floors to high-Alpine ridges.' },
+            { icon: '🚵', title: 'Mountain Biking', desc: 'World-class trail networks for every ability, from gentle routes to expert descents.' },
+            { icon: '🧘', title: 'Wellness', desc: 'Spas, saunas, and mountain air for a restorative Alpine retreat.' },
+            { icon: '🏊', title: 'Swimming', desc: 'Crystal-clear mountain lakes and private pools in your chalet.' },
+            { icon: '🪂', title: 'Paragliding', desc: 'Take to the skies above some of Europe\'s most spectacular scenery.' },
+            { icon: '⛳', title: 'Golf', desc: 'Exceptional mountain courses in settings that few sports can rival.' },
+          ].map(activity => (
+            <div class="bg-navy p-5">
+              <span class="text-2xl block mb-3">{activity.icon}</span>
+              <h3 class="font-serif text-white font-medium mb-1">{activity.title}</h3>
+              <p class="text-gray-400 text-xs leading-relaxed">{activity.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resorts -->
+  <section class="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Where We Are</p>
+      <h2 class="font-serif text-3xl sm:text-4xl text-navy mb-4">Our Resorts</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto leading-relaxed">
+        From the celebrated slopes of Lech to the glamour of Gstaad and the drama of Zermatt, our resorts represent the very finest Alpine summer destinations.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {countries.map(country => (
+        <div class="relative overflow-hidden group aspect-[3/4] bg-navy-dark">
+          <img
+            src={country.heroImage}
+            alt={country.name}
+            class="w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
+            onerror="this.style.display='none'"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h3 class="font-serif text-2xl text-white font-semibold mb-2">{country.name}</h3>
+            <p class="text-gray-300 text-sm leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{country.description}</p>
+            <a href={`/resorts/${country.slug}`} class="inline-block text-gold text-sm font-sans font-medium hover:text-gold-light transition-colors">
+              Explore {country.name} &rarr;
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- About / USP -->
+  <section class="bg-cream py-20 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-3">About Ultimate Summer Chalets</p>
+      <h2 class="font-serif text-3xl sm:text-4xl text-navy mb-6">The Very Best, Nothing Less</h2>
+      <p class="text-gray-600 leading-relaxed mb-5">
+        Ultimate Summer Chalets brings together the two defining names in luxury Alpine holidays: <a href="https://www.alpsinluxury.com" class="text-gold hover:underline">Alps In Luxury</a> and <a href="https://www.ultimateluxurychalets.com" class="text-gold hover:underline">Ultimate Luxury Chalets</a>. Every property in our summer collection appears in both portfolios -- meaning each one has been independently recognised as among the finest in the Alps.
+      </p>
+      <p class="text-gray-600 leading-relaxed mb-8">
+        We are part of <a href="https://www.blueskieslifestyle.com" class="text-gold hover:underline">Blue Skies Lifestyle Ltd</a>, an independent family business that has been placing discerning guests in exceptional Alpine properties since 2005. Our team of specialists know these resorts and chalets personally, and are here to ensure your summer in the Alps exceeds every expectation.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/about" class="bg-navy hover:bg-navy-light text-white font-sans font-medium px-8 py-3 transition-colors duration-200">About Us</a>
+        <a href="/contact" class="border-2 border-navy text-navy hover:bg-navy hover:text-white font-sans font-medium px-8 py-3 transition-all duration-200">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="bg-navy py-16 px-4 sm:px-6 text-center">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-serif text-3xl sm:text-4xl text-white mb-4">Ready to Plan Your Alpine Summer?</h2>
+      <p class="text-gray-300 mb-8 leading-relaxed">Speak to one of our specialists today. We will listen to what you are looking for and match you with the perfect chalet, in the perfect resort, for the perfect Alpine summer.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="/contact" class="bg-gold hover:bg-gold-light text-white font-sans font-medium px-10 py-3.5 transition-colors duration-200">Make an Enquiry</a>
+        <a href="tel:+441202203659" class="text-gray-300 hover:text-gold font-sans transition-colors flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          +44 (0)1202 203659
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
