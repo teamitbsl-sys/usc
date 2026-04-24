@@ -56,14 +56,14 @@ function getAmenityIcon(amenity: string): string {
   </div>
 
   <!-- Hero -->
-  <section class="relative h-[60vh] min-h-[400px] bg-navy-dark overflow-hidden">
+  <section class="relative bg-navy-dark overflow-hidden" style="height: 70vh; min-height: 500px;">
     <img
       src={chalet.heroImage}
       alt={chalet.name}
-      class="w-full h-full object-cover opacity-70"
+      class="absolute inset-0 w-full h-full object-cover object-center"
       onerror="this.style.display='none'"
     />
-    <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/75 via-navy-dark/10 to-transparent"></div>
     <div class="absolute bottom-0 left-0 right-0 p-8 max-w-7xl mx-auto">
       <p class="text-gold text-xs font-semibold tracking-widest uppercase mb-2">{chalet.resort}, {chalet.country}</p>
       <h1 class="font-serif text-4xl sm:text-5xl text-white font-semibold">{chalet.name}</h1>
@@ -72,10 +72,16 @@ function getAmenityIcon(amenity: string): string {
 
   <!-- Image Gallery Strip -->
   {chalet.images.length > 1 && (
-    <div class="grid grid-cols-3 gap-1 max-h-48 overflow-hidden">
+    <div class="grid grid-cols-3 gap-1">
       {chalet.images.slice(1, 4).map((img, i) => (
-        <div class="bg-navy-dark aspect-video overflow-hidden">
-          <img src={img} alt={`${chalet.name} - image ${i + 2}`} class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.style.display='none'" />
+        <div class="relative bg-navy-dark overflow-hidden" style="aspect-ratio: 4/3;">
+          <img
+            src={img}
+            alt={`${chalet.name} - image ${i + 2}`}
+            class="absolute inset-0 w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+            onerror="this.parentElement.style.display='none'"
+          />
         </div>
       ))}
     </div>
