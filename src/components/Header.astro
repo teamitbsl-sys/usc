@@ -41,10 +41,11 @@ const chaletCategories = [
     <div class="flex items-center justify-between h-16 lg:h-20">
 
       <!-- Logo -->
-      <a href="/" class="flex-shrink-0 group">
+      <a href="/" class="flex-shrink-0 group flex items-center gap-3">
+        <img src="/logo.svg" alt="" aria-hidden="true" class="h-9 w-9 flex-shrink-0" />
         <div class="flex flex-col leading-none">
-          <span class="font-serif text-lg lg:text-xl font-semibold tracking-wide text-white group-hover:text-gold transition-colors duration-200">Ultimate Summer Chalets</span>
-          <span class="text-gold text-xs tracking-widest uppercase font-sans font-light">The Finest in the Alps</span>
+          <span class="font-serif text-lg lg:text-xl font-semibold tracking-wide text-white group-hover:text-gold-light transition-colors duration-200">Ultimate Summer Chalets</span>
+          <span class="gold-shimmer text-xs tracking-widest uppercase font-sans font-light">The Finest in the Alps</span>
         </div>
       </a>
 
@@ -144,7 +145,11 @@ const chaletCategories = [
     @apply px-3 py-2 text-sm text-gray-300 hover:text-gold transition-colors duration-150 font-sans;
   }
   .btn-gold {
-    @apply bg-gold hover:bg-gold-light text-white font-sans font-medium px-5 py-2 transition-colors duration-200;
+    @apply text-white font-sans font-medium px-5 py-2 transition-all duration-200;
+    background: linear-gradient(135deg, #E5C85A 0%, #D4AF37 50%, #9B7D1A 100%);
+  }
+  .btn-gold:hover {
+    background: linear-gradient(135deg, #F0DA74 0%, #E5C850 50%, #B89022 100%);
   }
 </style>
 

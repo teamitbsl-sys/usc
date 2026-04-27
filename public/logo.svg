@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 36">
+  <defs>
+    <radialGradient id="sunGrad" cx="50%" cy="42%" r="55%" fx="50%" fy="38%">
+      <stop offset="0%" stop-color="#FDF0B0"/>
+      <stop offset="30%" stop-color="#EDD060"/>
+      <stop offset="65%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#9B7520"/>
+    </radialGradient>
+  </defs>
+  <!-- Sun disc -->
+  <circle cx="22" cy="20" r="13" fill="url(#sunGrad)"/>
+  <!-- Left flanking peak (slightly behind centre) -->
+  <polygon points="0,36 13,19 23,36" fill="#243558"/>
+  <!-- Right flanking peak (slightly behind centre) -->
+  <polygon points="21,36 31,21 44,36" fill="#243558"/>
+  <!-- Centre mountain (covers lower sun, drawn on top) -->
+  <polygon points="5,36 22,11 39,36" fill="#1A2B4A"/>
+</svg>

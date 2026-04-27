@@ -27,6 +27,39 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://ultimate
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      /* Gold shimmer — gradient text for decorative accent labels */
+      .gold-shimmer {
+        background: linear-gradient(135deg, #F5E8A0 0%, #E5C850 30%, #D4AF37 55%, #9B7D1A 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      /* Gold gradient background — for buttons and highlighted elements */
+      .gold-gradient {
+        background: linear-gradient(135deg, #E5C85A 0%, #D4AF37 50%, #9B7D1A 100%);
+      }
+      .gold-gradient:hover {
+        background: linear-gradient(135deg, #F0DA74 0%, #E5C850 50%, #B89022 100%);
+      }
+      /* Small-caps gold accent labels get shimmer automatically */
+      .text-gold.uppercase,
+      .text-gold.tracking-widest {
+        background: linear-gradient(135deg, #F5E8A0 0%, #E5C850 30%, #D4AF37 55%, #9B7D1A 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      /* Gold gradient on all interactive gold buttons/links — overrides Tailwind bg-gold */
+      a[class*="bg-gold"],
+      button[class*="bg-gold"] {
+        background: linear-gradient(135deg, #E5C85A 0%, #D4AF37 50%, #9B7D1A 100%);
+      }
+      a[class*="bg-gold"]:hover,
+      button[class*="bg-gold"]:hover {
+        background: linear-gradient(135deg, #F0DA74 0%, #E5C850 50%, #B89022 100%);
+      }
+    </style>
   </head>
   <body class="bg-white font-sans text-gray-800 antialiased">
     <Header />
