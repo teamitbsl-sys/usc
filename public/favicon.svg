@@ -1,15 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <radialGradient id="fg" cx="50%" cy="42%" r="55%" fx="50%" fy="38%">
-      <stop offset="0%" stop-color="#FDF0B0"/>
-      <stop offset="35%" stop-color="#EDD060"/>
-      <stop offset="70%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#9B7520"/>
-    </radialGradient>
-  </defs>
   <rect width="32" height="32" fill="#0F1B30"/>
-  <!-- Sun -->
-  <circle cx="16" cy="15" r="9" fill="url(#fg)"/>
-  <!-- Mountain -->
-  <polygon points="0,32 16,10 32,32" fill="#1A2B4A"/>
+  <!-- Sun behind peaks -->
+  <circle cx="16" cy="5" r="6" fill="#F0DA74"/>
+  <!-- Peak 1: larger, left/background -->
+  <polygon points="0,32 11,7 11,32" fill="#FFFFFF"/>
+  <polygon points="11,7 22,32 11,32" fill="#D4AF37"/>
+  <!-- Peak 2: smaller, right/foreground -->
+  <polygon points="14,32 22,13 22,32" fill="#FFFFFF"/>
+  <polygon points="22,13 32,32 22,32" fill="#D4AF37"/>
 </svg>
