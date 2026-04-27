@@ -1,12 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" fill="#0F1B30"/>
-  <!-- Sun starburst: 8-pointed star, inner r=5, outer r=9, centre (15,2) -->
-  <polygon fill="#F0DA74"
-    points="15,-7 17,-3 21,-4 20,0 24,2 20,4 21,8 17,7 15,11 13,7 9,8 10,4 6,2 10,0 9,-4 13,-3"/>
-  <!-- Peak 1: larger, left/background -->
-  <polygon points="0,32 11,9 11,32" fill="#FFFFFF" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
-  <polygon points="11,9 22,32 11,32" fill="#D4AF37" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
+  <!-- Large sun disc — mountains cover the bottom -->
+  <circle cx="15" cy="8" r="9" fill="#F0DA74"/>
+  <!-- Short ray lines -->
+  <line x1="15" y1="-1"  x2="15" y2="-4"  stroke="#F0DA74" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="21.4" y1="1.6" x2="23.5" y2="-0.5" stroke="#F0DA74" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="24"  y1="8"   x2="27"  y2="8"   stroke="#F0DA74" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="6"   y1="8"   x2="3"   y2="8"   stroke="#F0DA74" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="8.6" y1="1.6" x2="6.5" y2="-0.5" stroke="#F0DA74" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Peak 1: larger, left -->
+  <polygon points="0,32 11,7 11,32"  fill="#FFFFFF" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
+  <polygon points="11,7 22,32 11,32" fill="#D4AF37" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
   <!-- Peak 2: smaller, right/foreground -->
-  <polygon points="14,32 22,15 22,32" fill="#FFFFFF" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
-  <polygon points="22,15 32,32 22,32" fill="#D4AF37" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
+  <polygon points="14,32 21,13 21,32" fill="#FFFFFF" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
+  <polygon points="21,13 32,32 21,32" fill="#D4AF37" stroke="#0F1B30" stroke-width="1.2" stroke-linejoin="miter"/>
 </svg>
