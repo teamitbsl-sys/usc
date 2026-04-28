@@ -122,24 +122,47 @@ const featuredChalets = chalets.slice(0, 6);
         From the celebrated slopes of Lech to the glamour of Gstaad and the drama of Zermatt, our resorts represent the very finest Alpine summer destinations.
       </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {countries.map(country => (
-        <div class="relative overflow-hidden group aspect-[3/4] bg-navy-dark">
+        <a href={`/resorts/${country.slug}`} class="relative overflow-hidden group aspect-[3/4] bg-navy-dark block">
           <img
             src={country.heroImage}
             alt={country.name}
-            class="w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
+            class="absolute inset-0 w-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-500"
+            style="height:100%;object-fit:cover;"
             onerror="this.style.display='none'"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-transparent to-transparent"></div>
+          <!-- Country map outline -->
+          {country.slug === 'austria' && (
+            <svg viewBox="0 0 200 200" class="absolute inset-0 w-full h-full opacity-[0.13] pointer-events-none" aria-hidden="true">
+              <path d="M 15,82 L 28,63 L 42,69 L 56,57 L 72,62 L 87,53 L 105,56 L 122,51 L 140,53 L 158,57 L 175,65 L 186,76 L 186,90 L 174,100 L 157,94 L 141,105 L 124,96 L 107,102 L 90,94 L 72,101 L 55,94 L 38,99 L 20,93 L 15,84 Z" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
+          )}
+          {country.slug === 'france' && (
+            <svg viewBox="0 0 200 200" class="absolute inset-0 w-full h-full opacity-[0.13] pointer-events-none" aria-hidden="true">
+              <path d="M 65,18 L 96,10 L 124,21 L 142,46 L 146,76 L 130,102 L 100,116 L 68,111 L 40,94 L 27,68 L 33,40 L 52,22 Z" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
+          )}
+          {country.slug === 'switzerland' && (
+            <svg viewBox="0 0 200 200" class="absolute inset-0 w-full h-full opacity-[0.13] pointer-events-none" aria-hidden="true">
+              <path d="M 42,44 L 66,28 L 100,30 L 132,42 L 146,64 L 136,86 L 104,98 L 72,100 L 44,90 L 26,70 L 32,52 Z" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
+          )}
+          {country.slug === 'italy' && (
+            <svg viewBox="0 0 200 200" class="absolute inset-0 w-full h-full opacity-[0.13] pointer-events-none" aria-hidden="true">
+              <path d="M 70,6 L 96,6 L 110,28 L 114,54 L 107,80 L 120,106 L 117,132 L 100,140 L 87,130 L 85,110 L 74,92 L 60,72 L 52,52 L 56,28 Z" fill="none" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M 106,112 L 132,100 L 144,116 L 138,134 L 118,138 L 106,126 Z" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>
+          )}
+          <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/95 via-navy-dark/55 to-navy-dark/10"></div>
           <div class="absolute bottom-0 left-0 right-0 p-6">
             <h3 class="font-serif text-2xl text-white font-semibold mb-2">{country.name}</h3>
-            <p class="text-gray-300 text-sm leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">{country.description}</p>
-            <a href={`/resorts/${country.slug}`} class="inline-block text-gold text-sm font-sans font-medium hover:text-gold-light transition-colors">
+            <p class="text-gray-300 text-sm leading-relaxed mb-4">{country.description}</p>
+            <span class="inline-block text-gold text-sm font-sans font-medium group-hover:text-gold-light transition-colors">
               Explore {country.name} &rarr;
-            </a>
+            </span>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   </section>

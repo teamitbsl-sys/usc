@@ -3,20 +3,22 @@ import Layout from '../../layouts/Layout.astro';
 import PropertyCard from '../../components/PropertyCard.astro';
 import { chalets, getChaletsByAmenity } from '../../data/chalets';
 
-export function getStaticPaths() {
-  return [
-    { params: { filter: 'catered' }, props: { label: 'Catered Summer Chalets', amenity: null, board: 'Catered' } },
-    { params: { filter: 'self-catered' }, props: { label: 'Self-Catered Summer Chalets', amenity: null, board: 'Self-Catered' } },
-    { params: { filter: 'with-pool' }, props: { label: 'Summer Chalets with Private Pool', amenity: 'Pool', board: null } },
-    { params: { filter: 'with-hot-tub' }, props: { label: 'Summer Chalets with Hot Tub', amenity: 'Hot Tub', board: null } },
-    { params: { filter: 'with-gym' }, props: { label: 'Summer Chalets with Gym', amenity: 'Gym', board: null } },
-    { params: { filter: 'with-sauna' }, props: { label: 'Summer Chalets with Sauna', amenity: 'Sauna', board: null } },
-    { params: { filter: 'with-cinema' }, props: { label: 'Summer Chalets with Cinema', amenity: 'Cinema', board: null } },
-  ];
-}
-
 const { filter } = Astro.params;
-const { label, amenity, board } = Astro.props;
+
+const filterConfig: Record<string, { label: string; amenity: string | null; board: string | null }> = {
+  'catered':      { label: 'Catered Summer Chalets',               amenity: null,     board: 'Catered' },
+  'self-catered': { label: 'Self-Catered Summer Chalets',          amenity: null,     board: 'Self-Catered' },
+  'with-pool':    { label: 'Summer Chalets with Private Pool',     amenity: 'Pool',   board: null },
+  'with-hot-tub': { label: 'Summer Chalets with Hot Tub',         amenity: 'Hot Tub',board: null },
+  'with-gym':     { label: 'Summer Chalets with Gym',             amenity: 'Gym',    board: null },
+  'with-sauna':   { label: 'Summer Chalets with Sauna',           amenity: 'Sauna',  board: null },
+  'with-cinema':  { label: 'Summer Chalets with Cinema',          amenity: 'Cinema', board: null },
+};
+
+const config = filterConfig[filter ?? ''];
+if (!config) return Astro.redirect('/summer-chalets');
+
+const { label, amenity, board } = config;
 
 let filtered = chalets;
 if (amenity) filtered = getChaletsByAmenity(amenity);
