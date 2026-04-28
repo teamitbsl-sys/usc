@@ -5,7 +5,7 @@ import { chalets, getChaletsByAmenity } from '../../data/chalets';
 
 export function getStaticPaths() {
   return [
-    { params: { filter: 'catered' }, props: { label: 'Catered Summer Chalets', amenity: 'catered', board: 'Catered' } },
+    { params: { filter: 'catered' }, props: { label: 'Catered Summer Chalets', amenity: null, board: 'Catered' } },
     { params: { filter: 'self-catered' }, props: { label: 'Self-Catered Summer Chalets', amenity: null, board: 'Self-Catered' } },
     { params: { filter: 'with-pool' }, props: { label: 'Summer Chalets with Private Pool', amenity: 'Pool', board: null } },
     { params: { filter: 'with-hot-tub' }, props: { label: 'Summer Chalets with Hot Tub', amenity: 'Hot Tub', board: null } },
@@ -20,7 +20,7 @@ const { label, amenity, board } = Astro.props;
 
 let filtered = chalets;
 if (amenity) filtered = getChaletsByAmenity(amenity);
-if (board) filtered = filtered.filter(c => c.boardBasis.some(b => b.toLowerCase().includes(board.toLowerCase())));
+if (board) filtered = filtered.filter(c => c.boardBasis.some(b => b === board));
 ---
 
 <Layout title={label}>
